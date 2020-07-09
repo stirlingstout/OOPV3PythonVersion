@@ -63,6 +63,12 @@ class OOPDraw(wx.Frame):
         b = wx.Point(400, 500)
         dc.SetPen(self.CurrentPen)
         dc.DrawLine(a, b)
+
+        # Page 8 exercise start
+         c = wx.Point(600, 300)
+        dc.DrawLine(b, c)
+        dc.DrawLine(c, a)
+        # Page 8 exercise end
     # Page 6 changes end
 
 if __name__ == '__main__':
