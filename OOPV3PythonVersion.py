@@ -42,6 +42,15 @@ class OOPDraw(wx.Frame):
         self.CurrentPen = wx.Pen(wx.BLACK)
         # Page 6 changes end
 
+        # Page 9 changes start
+        self.Canvas.Bind(wx.EVT_LEFT_DOWN, self.OnMouseDown)
+        self.Canvas.Bind(wx.EVT_LEFT_UP, self.OnMouseUp)
+        self.Canvas.Bind(wx.EVT_MOTION, self.OnMouseMove)
+
+        self.dragging = False
+        self.startOfDrag = wx.Point()
+        self.lastMousePosition = wx.Point()
+
     # These events could be deleted and the user asked to put them in
     #def OnLineWidthChanged(self: wx.Frame, e: wx.Event):
     #    pass
@@ -55,21 +64,28 @@ class OOPDraw(wx.Frame):
     #def OnActionChanged(self: wx.Frame, e: wx.Event):
     #    pass
 
-    # Page 6 changes start
     def OnPaint(self: wx.Frame, e: wx.Event):
         dc = wx.BufferedPaintDC(self.Canvas)
         dc.Clear()
-        a = wx.Point(20, 30)
-        b = wx.Point(400, 500)
+        # Page 9 exercise start
         dc.SetPen(self.CurrentPen)
-        dc.DrawLine(a, b)
+        dc.DrawLine(self.startOfDrag, self.lastMousePosition)
+        # Page 9 exercise end
 
-        # Page 8 exercise start
-         c = wx.Point(600, 300)
-        dc.DrawLine(b, c)
-        dc.DrawLine(c, a)
-        # Page 8 exercise end
-    # Page 6 changes end
+    # Page 9 changes start
+    def OnMouseDown(self: wx.Window, e: wx.MouseEvent):
+        self.dragging = True
+        self.startOfDrag = lastMousePosition = e.GetPosition()
+        e.Skip()
+
+    def OnMouseUp(self: wx.Window, e: wx.MouseEvent):
+        self.dragging = False
+
+    def OnMouseMove(self: wx.Window, e: wx.MouseEvent):
+        if self.dragging:
+            self.lastMousePosition = e.GetPosition()
+            self.Refresh()
+    # Page 9 changes end
 
 if __name__ == '__main__':
     app = wx.App()
