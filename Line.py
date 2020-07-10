@@ -2,7 +2,7 @@ import wx
 
 from Shape import Shape
 
-class Line():
+class Line(Shape):
     """I represent a line in the OOPDraw program. I have a
     Pen, and the start and end points of the line I represent.
     The end point can be changed using my GrowTo method"""
