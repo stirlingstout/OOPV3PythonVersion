@@ -26,8 +26,8 @@ class OOPDraw(wx.Frame):
         vBox = wx.BoxSizer(wx.VERTICAL)
         panel.SetSizer(vBox)
 
-        #AddChoice(panel, vBox, "Line width:", 0, ["Thin", "Medium", "Thick"], self.OnLineWidthChanged)
-        #AddChoice(panel, vBox, "Colour:", 30, ["Red", "Green", "Blue"], self.OnColourChanged)
+        AddChoice(panel, vBox, "Line width:", 0, ["Thin", "Medium", "Thick"], self.OnLineWidthChanged)
+        AddChoice(panel, vBox, "Colour:", 30, ["Red", "Green", "Blue"], self.OnColourChanged)
         #AddChoice(panel, vBox, "Shape:", 60, ["Line", "Rectangle", "Ellipse", "Circle"] , self.OnShapeChanged)
         #AddChoice(panel, vBox, "Action:", 90, ["Draw", "Select", "Duplicate", "Move", "Group"] , self.OnActionChanged)
 
@@ -56,11 +56,25 @@ class OOPDraw(wx.Frame):
         self.Lines = []
 
     # These events could be deleted and the user asked to put them in
-    #def OnLineWidthChanged(self: wx.Frame, e: wx.Event):
-    #    pass
+    def OnLineWidthChanged(self: wx.Frame, e: wx.Event):
+        width = self.CurrentPen.Width
+        if e.String == "Thin":
+            width = 2
+        elif e.String == "Medium":
+            width = 4
+        elif e.String == "Thick":
+            width = 8
+        self.CurrentPen = wx.Pen(self.CurrentPen.Colour, width)
 
-    #def OnColourChanged(self: wx.Frame, e: wx.Event):
-    #    pass
+    def OnColourChanged(self: wx.Frame, e: wx.Event):
+        colour = self.CurrentPen.Colour
+        if e.String == "Red":
+            colour = wx.RED
+        elif e.String == "Green":
+            colour = wx.GREEN
+        elif e.String == "Blue":
+            colour = wx.BLUE
+        self.CurrentPen = wx.Pen(colour, self.CurrentPen.Width)
 
     #def OnShapeChanged(self: wx.Frame, e: wx.Event):
     #    pass
