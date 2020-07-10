@@ -13,7 +13,7 @@ class Rectangle(Shape):
         y = min([self.Y1(), self.Y2()])
         w = max([self.X1(), self.X2()]) - x
         h = max([self.Y1(), self.Y2()]) - y
-        dc.SetPen(self.Pen())
+        dc.Pen = self.Pen()
         dc.DrawRectangle(x, y, w, h)
 
 

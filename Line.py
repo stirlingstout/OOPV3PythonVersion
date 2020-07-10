@@ -8,7 +8,7 @@ class Line(Shape):
     The end point can be changed using my GrowTo method"""
  
     def Draw(self, dc: wx.DC):
-        dc.SetPen(self.Pen())
+        dc.Pen = self.Pen()
         dc.DrawLine(self.X1(), self.Y1(), self.X2(), self.Y2())
 
 
