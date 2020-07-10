@@ -4,6 +4,7 @@ from typing import List, Callable
 
 from Line import Line
 from Rectangle import Rectangle
+from ellipse import Ellipse
 
 from Shape import Shape
 
@@ -99,6 +100,8 @@ class OOPDraw(wx.Frame):
             self.Shapes.append(Line(self.CurrentPen, e.Position.x, e.Position.y));
         elif self.FindWindow("Shape").Value == "Rectangle":
             self.Shapes.append(Rectangle(self.CurrentPen, e.Position.x, e.Position.y))
+        elif self.FindWindow("Shape").Value == "Ellipse":
+            self.Shapes.append(Ellipse(self.CurrentPen, e.Position.x, e.Position.y))
         e.Skip()
 
     def OnMouseUp(self: wx.Window, e: wx.MouseEvent):
