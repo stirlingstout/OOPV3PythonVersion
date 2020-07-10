@@ -1,7 +1,8 @@
 import wx
 
+from Shape import Shape
 
-class Rectangle(object):
+class Rectangle(Shape):
     """I represent a rectangle in the OOPDraw program. I have a
     Pen, and the start and end points of my top left and bottom 
     corners of the rectangle.

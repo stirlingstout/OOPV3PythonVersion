@@ -5,6 +5,8 @@ from typing import List, Callable
 from Line import Line
 from Rectangle import Rectangle
 
+from Shape import Shape
+
 class OOPDraw(wx.Frame):
     """ OOPDraw is a subclass of wx.Frame which contains all the wx.Windows (labels, comboboxes and
     panel on which graphic elements are drawn """
