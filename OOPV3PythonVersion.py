@@ -2,9 +2,8 @@ import wx
 
 from typing import List, Callable
 
-# Page 15 exercise start
 from Line import Line
-# Page 15 exercise end
+from Rectangle import Rectangle
 
 class OOPDraw(wx.Frame):
     """ OOPDraw is a subclass of wx.Frame which contains all the wx.Windows (labels, comboboxes and
@@ -85,18 +84,15 @@ class OOPDraw(wx.Frame):
     def OnPaint(self: wx.Frame, e: wx.Event):
         dc = wx.BufferedPaintDC(self.Canvas)
         dc.Clear()
-        # Page 15 exercise start
         for line in self.Lines:
             line.Draw(dc)
-        # Page 15 exercise end
+        rect = Rectangle(self.CurrentPen, 100, 200, 300, 500)
+        rect.Draw(dc)
 
-    # Page 9 changes start
     def OnMouseDown(self: wx.Window, e: wx.MouseEvent):
         self.dragging = True
         self.startOfDrag = lastMousePosition = e.GetPosition()
-        # Page 15 exercise start
         self.Lines.append(Line(self.CurrentPen, e.GetPosition().x, e.GetPosition().y));
-        # Page 15 exercise end
         e.Skip()
 
     def OnMouseUp(self: wx.Window, e: wx.MouseEvent):
