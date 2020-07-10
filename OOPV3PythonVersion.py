@@ -2,6 +2,9 @@ import wx
 
 from typing import List, Callable
 
+# Page 15 exercise start
+from Line import Line
+# Page 15 exercise end
 
 class OOPDraw(wx.Frame):
     """ OOPDraw is a subclass of wx.Frame which contains all the wx.Windows (labels, comboboxes and
@@ -50,6 +53,7 @@ class OOPDraw(wx.Frame):
         self.dragging = False
         self.startOfDrag = wx.Point()
         self.lastMousePosition = wx.Point()
+        self.Lines = []
 
     # These events could be deleted and the user asked to put them in
     #def OnLineWidthChanged(self: wx.Frame, e: wx.Event):
@@ -67,15 +71,18 @@ class OOPDraw(wx.Frame):
     def OnPaint(self: wx.Frame, e: wx.Event):
         dc = wx.BufferedPaintDC(self.Canvas)
         dc.Clear()
-        # Page 9 exercise start
-        dc.SetPen(self.CurrentPen)
-        dc.DrawLine(self.startOfDrag, self.lastMousePosition)
-        # Page 9 exercise end
+        # Page 15 exercise start
+        for line in self.Lines:
+            line.Draw(dc)
+        # Page 15 exercise end
 
     # Page 9 changes start
     def OnMouseDown(self: wx.Window, e: wx.MouseEvent):
         self.dragging = True
         self.startOfDrag = lastMousePosition = e.GetPosition()
+        # Page 15 exercise start
+        self.Lines.append(Line(self.CurrentPen, e.GetPosition().x, e.GetPosition().y));
+        # Page 15 exercise end
         e.Skip()
 
     def OnMouseUp(self: wx.Window, e: wx.MouseEvent):
@@ -83,9 +90,14 @@ class OOPDraw(wx.Frame):
 
     def OnMouseMove(self: wx.Window, e: wx.MouseEvent):
         if self.dragging:
+            # Page 15 exercise start
+            currentLine = self.Lines[-1]
+            currentLine.GrowTo(e.GetPosition().x, e.GetPosition().y)
+            # Page 15 exercise end
             self.lastMousePosition = e.GetPosition()
             self.Refresh()
     # Page 9 changes end
+
 
 if __name__ == '__main__':
     app = wx.App()
