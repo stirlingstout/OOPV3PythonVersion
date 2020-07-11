@@ -1,5 +1,7 @@
 import wx # type: ignore
 
+from typing import Tuple
+
 from shape import Shape
 
 class Rectangle(Shape):
@@ -12,6 +14,13 @@ class Rectangle(Shape):
         (x, y, w, h) = self.EnclosingRectangle()
         dc.Pen = self.Pen()
         dc.DrawRectangle(x, y, w, h)
+        
+    def FullySurrounds(self, s: Shape) -> bool:
+        (x, y, w, h) = self.EnclosingRectangle()
+        (xs, ys, ws, hs) = s.EnclosingRectangle()
+        return x < xs and y < ys and x + w > xs + ws and y + h > ys + hs
+
+
 
 
 

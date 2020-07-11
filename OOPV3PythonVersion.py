@@ -60,6 +60,8 @@ class OOPDraw(wx.Frame):
         self.startOfDrag: wx.Point = wx.Point()
         self.lastMousePosition: wx.Point = wx.Point()
         self.Shapes: List[Shape] = []
+
+        self.SelectionBox: Rectangle = None
        
     # These events could be deleted and the user asked to put them in
     def OnLineWidthChanged(self: wx.Frame, e: wx.Event):
@@ -94,6 +96,8 @@ class OOPDraw(wx.Frame):
         dc.Brush = self.CurrentBrush
         for shape in self.Shapes:
             shape.Draw(dc)
+        if self.SelectionBox:
+            self.SelectionBox.Draw(dc)
 
     def AddShape(self, e: wx.MouseEvent):
         shapeName: str = self.FindWindow("Shape").Value
@@ -112,12 +116,17 @@ class OOPDraw(wx.Frame):
         action: str = self.FindWindow("Action").Value
         if action == "Draw":
             self.AddShape(e)
-        # debug: print(f"Circle({self.Shapes[-1].X1()}, {self.Shapes[-1].Y1()})-({self.Shapes[-1].X2()}, {self.Shapes[-1].Y2()})")
+        elif action == "Select":
+            p = wx.Pen(wx.BLACK, 1)
+            self.SelectionBox = Rectangle(p, self.startOfDrag.x, self.startOfDrag.y)
+
+        # debug: print(f"{type(self.Shapes[-1])}Circle({self.Shapes[-1].X1()}, {self.Shapes[-1].Y1()})-({self.Shapes[-1].X2()}, {self.Shapes[-1].Y2()})")
         e.Skip()
 
     def OnMouseUp(self: wx.Frame, e: wx.MouseEvent):
         self.dragging = False
         self.lastMousePosition = wx.Point()
+        self.SelectionBox = None
         self.Refresh()
 
     def OnMouseMove(self: wx.Frame, e: wx.MouseEvent):
@@ -129,7 +138,11 @@ class OOPDraw(wx.Frame):
                     self.lastMousePosition = e.Position
                 currentShape.MoveBy(e.Position.x - self.lastMousePosition.x, e.Position.y - self.lastMousePosition.y)
             elif action == "Draw":
-                currentShape.GrowTo(e.Position.x, e.Position.y);
+                currentShape.GrowTo(e.Position.x, e.Position.y)
+            elif action == "Select":
+                self.SelectionBox.GrowTo(e.X,e.Y)
+                self.SelectShapes()
+
             # debug: print(f"{type(currentShape)}({currentShape.X1()}, {currentShape.Y1()})-({currentShape.X2()}, {currentShape.Y2()})")
             self.lastMousePosition = e.Position
             self.Refresh()
@@ -137,6 +150,12 @@ class OOPDraw(wx.Frame):
     def DeselectAll(self):
         for shape in self.Shapes:
             shape.Deselect()
+
+    def SelectShapes(self):
+        self.DeselectAll()
+        for s in self.Shapes:
+            if self.SelectionBox.FullySurrounds(s):
+                s.Select()
 
 
 if __name__ == '__main__':
