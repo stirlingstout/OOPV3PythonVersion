@@ -1,4 +1,4 @@
-import wx
+import wx # type: ignore
 
 from typing import List, Callable, Optional
 
@@ -6,7 +6,7 @@ from Shape import Shape
 
 from Line import Line
 from Rectangle import Rectangle
-from ellipse import Ellipse
+from Ellipse import Ellipse
 from Circle import Circle
 
 
@@ -107,7 +107,7 @@ class OOPDraw(wx.Frame):
             self.Shapes.append(Ellipse(self.CurrentPen, e.Position.x, e.Position.y))
         elif shapeName == "Circle":
             self.Shapes.append(Circle(self.CurrentPen, e.Position.x, e.Position.y))
-            print(f"Circle({self.Shapes[-1].X1()}, {self.Shapes[-1].Y1()})-({self.Shapes[-1].X2()}, {self.Shapes[-1].Y2()})")
+            # debug: print(f"Circle({self.Shapes[-1].X1()}, {self.Shapes[-1].Y1()})-({self.Shapes[-1].X2()}, {self.Shapes[-1].Y2()})")
         e.Skip()
 
     def OnMouseUp(self: wx.Window, e: wx.MouseEvent):

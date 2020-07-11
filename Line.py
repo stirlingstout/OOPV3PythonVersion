@@ -1,4 +1,4 @@
-import wx
+import wx # type: ignore
 
 from Shape import Shape
 

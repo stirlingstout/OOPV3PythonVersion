@@ -25,7 +25,10 @@
     <Compile Include="Circle.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ellipse.py">
+    <Compile Include="drawing_functions.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Ellipse.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Line.py">

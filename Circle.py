@@ -1,7 +1,10 @@
 from typing import Optional
-import wx
+
+import wx # type: ignore
 
 from Shape import Shape
+
+from drawing_functions import DrawingFunctions
 
 class Circle(Shape):
     """I represent a circle in the OOPDraw system"""
@@ -11,13 +14,7 @@ class Circle(Shape):
         self.GrowTo(self.X2(), self.Y2())
 
     def Draw(self, dc: wx.DC):
-        x: int = min([self.X1(), self.X2()])
-        y: int = min([self.Y1(), self.Y2()])
-        w: int = max([self.X1(), self.X2()]) - x
-        h: int = max([self.Y1(), self.Y2()]) - y
-        r: int = w // 2
-        dc.Pen = self.Pen()
-        dc.DrawCircle(x + r, y + r, r)
+        DrawingFunctions.DrawClosedArc(dc, self)
 
     def GrowTo(self, x2: int, y2: int):
         diameter: int = max([x2 - self.X1(), y2 - self.Y1()])

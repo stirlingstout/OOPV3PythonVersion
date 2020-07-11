@@ -2,4 +2,13 @@ Running mypy for the first time may need installing
 Too much type hinting?
 Do you type hint self in a class?
 Casing conventions?
-Use wx.DrawCircle and wx.DrawEllipse?
+Use wx.DrawCircle and wx.DrawEllipse? Changed to DrawEllipticArc
+What are we going to do about class diagrams?
+# type: ignore on import wx
+Problem with type hints in tuple deconstruction (page 48)
+  x: int, y: int, w: int, h: int = self.EnclosingRectangle()
+  doesn't work.
+  There's somewhere else you can't do it either but I can't
+  remember where.
+  Enclose x, y, w, h in ()
+Module names should be lowercase (done, but then the from line import Line doesn't work!)

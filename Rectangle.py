@@ -1,4 +1,4 @@
-import wx
+import wx # type: ignore
 
 from Shape import Shape
 
@@ -9,10 +9,7 @@ class Rectangle(Shape):
     My size can be changed using my GrowTo method"""
 
     def Draw(self, dc: wx.DC):
-        x: int = min([self.X1(), self.X2()])
-        y: int = min([self.Y1(), self.Y2()])
-        w: int = max([self.X1(), self.X2()]) - x
-        h: int = max([self.Y1(), self.Y2()]) - y
+        (x, y, w, h) = self.EnclosingRectangle()
         dc.Pen = self.Pen()
         dc.DrawRectangle(x, y, w, h)
 
