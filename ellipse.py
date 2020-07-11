@@ -1,6 +1,6 @@
 import wx # type: ignore
 
-from Shape import Shape
+from shape import Shape
 
 from drawing_functions import DrawingFunctions
 

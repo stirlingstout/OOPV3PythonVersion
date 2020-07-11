@@ -2,7 +2,7 @@ import wx # type: ignore
 
 from typing import List, Callable, Optional
 
-from Shape import Shape
+from shape import Shape
 
 from Line import Line
 from Rectangle import Rectangle
@@ -33,7 +33,7 @@ class OOPDraw(wx.Frame):
         AddChoice(panel, vBox, "LineWidth", "Line width:", 0, ["Thin", "Medium", "Thick"], self.OnLineWidthChanged)
         AddChoice(panel, vBox, "Colour", "Colour:", 30, ["Red", "Green", "Blue"], self.OnColourChanged)
         AddChoice(panel, vBox, "Shape", "Shape:", 60, ["Line", "Rectangle", "Ellipse", "Circle"] , self.OnShapeChanged)
-        #AddChoice(panel, vBox, "Action:", 90, ["Draw", "Select", "Duplicate", "Move", "Group"] , self.OnActionChanged)
+        AddChoice(panel, vBox, "Action", "Action:", 90, ["Draw", "Select", "Duplicate", "Move", "Group"] , self.OnActionChanged)
 
         # hBox is responsible for sizing the panel for controls and the panel for drawing on (canvas)
         hBox: wx.BoxSizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -85,8 +85,8 @@ class OOPDraw(wx.Frame):
     def OnShapeChanged(self: wx.Frame, e: wx.Event):
         pass
 
-    #def OnActionChanged(self: wx.Frame, e: wx.Event):
-    #    pass
+    def OnActionChanged(self: wx.Frame, e: wx.Event):
+        pass
 
     def OnPaint(self: wx.Frame, e: wx.Event):
         dc: wx.DC = wx.BufferedPaintDC(self.Canvas)
@@ -95,9 +95,7 @@ class OOPDraw(wx.Frame):
         for shape in self.Shapes:
             shape.Draw(dc)
 
-    def OnMouseDown(self: wx.Window, e: wx.MouseEvent):
-        self.dragging = True
-        self.startOfDrag = lastMousePosition = e.Position
+    def AddShape(self: wx.Frame, e: wx.MouseEvent):
         shapeName: str = self.FindWindow("Shape").Value
         if shapeName == "Line":
             self.Shapes.append(Line(self.CurrentPen, e.Position.x, e.Position.y));
@@ -107,16 +105,31 @@ class OOPDraw(wx.Frame):
             self.Shapes.append(Ellipse(self.CurrentPen, e.Position.x, e.Position.y))
         elif shapeName == "Circle":
             self.Shapes.append(Circle(self.CurrentPen, e.Position.x, e.Position.y))
-            # debug: print(f"Circle({self.Shapes[-1].X1()}, {self.Shapes[-1].Y1()})-({self.Shapes[-1].X2()}, {self.Shapes[-1].Y2()})")
+
+    def OnMouseDown(self: wx.Frame, e: wx.MouseEvent):
+        self.dragging = True
+        self.startOfDrag = lastMousePosition = e.Position
+        action: str = self.FindWindow("Action").Value
+        if action == "Draw":
+            self.AddShape(e)
+        # debug: print(f"Circle({self.Shapes[-1].X1()}, {self.Shapes[-1].Y1()})-({self.Shapes[-1].X2()}, {self.Shapes[-1].Y2()})")
         e.Skip()
 
-    def OnMouseUp(self: wx.Window, e: wx.MouseEvent):
+    def OnMouseUp(self: wx.Frame, e: wx.MouseEvent):
         self.dragging = False
+        self.lastMousePosition = wx.Point()
+        self.Refresh()
 
-    def OnMouseMove(self: wx.Window, e: wx.MouseEvent):
+    def OnMouseMove(self: wx.Frame, e: wx.MouseEvent):
         if self.dragging:
             currentShape: Shape = self.Shapes[-1]
-            currentShape.GrowTo(e.Position.x, e.Position.y)
+            action: str = self.FindWindow("Action").Value
+            if action == "Move":
+                if self.lastMousePosition == wx.Point(): # dubious?
+                    self.lastMousePosition = e.Position
+                currentShape.MoveBy(e.Position.x - self.lastMousePosition.x, e.Position.y - self.lastMousePosition.y)
+            elif action == "Draw":
+                currentShape.GrowTo(e.Position.x, e.Position.y);
             # debug: print(f"{type(currentShape)}({currentShape.X1()}, {currentShape.Y1()})-({currentShape.X2()}, {currentShape.Y2()})")
             self.lastMousePosition = e.Position
             self.Refresh()

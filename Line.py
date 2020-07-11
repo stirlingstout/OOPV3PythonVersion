@@ -1,6 +1,6 @@
 import wx # type: ignore
 
-from Shape import Shape
+from shape import Shape
 
 class Line(Shape):
     """I represent a line in the OOPDraw program. I have a

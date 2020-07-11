@@ -1,6 +1,6 @@
 import wx # type: ignore
 
-from Shape import Shape
+from shape import Shape
 
 class Rectangle(Shape):
     """I represent a rectangle in the OOPDraw program. I have a

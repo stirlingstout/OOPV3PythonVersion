@@ -1,6 +1,6 @@
 import wx # type: ignore
 
-from Shape import Shape
+from shape import Shape
 
 class DrawingFunctions(object):
     """I contain helper functions for OOPDraw. Note that

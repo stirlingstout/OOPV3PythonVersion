@@ -44,3 +44,9 @@ class Shape(ABC):
         w: int = max([self.__X1, self.__X2]) - x
         h: int = max([self.__Y1, self.__Y2]) - y
         return (x, y, w, h)
+
+    def MoveBy(self, xDelta: int, yDelta: int):
+        self.__X1 += xDelta
+        self.__Y1 += yDelta
+        self.__X2 += xDelta
+        self.__Y2 += yDelta
