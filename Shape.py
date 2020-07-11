@@ -1,16 +1,19 @@
 from abc import ABC, abstractmethod
+from typing import Optional
+
 import wx
+
 
 class Shape(ABC):
     """I define members common to all the shapes that
     will be used in OOPDraw. I can't be instantiated
     myself since I'm abstract"""
-    def __init__(self, p: wx.Pen, x1: int, y1: int, x2: int=None, y2: int=None):
-        self.__Pen = p
-        self.__X1 = x1
-        self.__Y1 = y1
-        self.__X2 = x2 if x2 else x1
-        self.__Y2 = y2 if y2 else y1
+    def __init__(self, p: wx.Pen, x1: int, y1: int, x2: Optional[int]=None, y2: Optional[int]=None):
+        self.__Pen: wx.Pen = p
+        self.__X1: int = x1
+        self.__Y1: int = y1
+        self.__X2: int = x2 if x2 else x1
+        self.__Y2: int = y2 if y2 else y1
         
     def Pen(self):
         return self.__Pen

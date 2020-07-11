@@ -1,0 +1,5 @@
+Running mypy for the first time may need installing
+Too much type hinting?
+Do you type hint self in a class?
+Casing conventions?
+Use wx.DrawCircle and wx.DrawEllipse?
