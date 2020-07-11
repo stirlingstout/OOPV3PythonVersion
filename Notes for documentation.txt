@@ -9,7 +9,7 @@ Problem with type hints in tuple deconstruction (page 48)
   x: int, y: int, w: int, h: int = self.EnclosingRectangle()
   doesn't work.
   There's somewhere else you can't do it either but I can't
-  remember where.
+  remember where (in a for loop I think)
   Enclose x, y, w, h in ()
 Module names should be lowercase (done, but then the from line import Line doesn't work!)
 do we need OnAction/ShapeChanged since we don't do anything when they do change?

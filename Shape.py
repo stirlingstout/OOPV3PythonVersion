@@ -14,6 +14,7 @@ class Shape(ABC):
         self.__Y1: int = y1
         self.__X2: int = x2 if x2 else x1
         self.__Y2: int = y2 if y2 else y1
+        self.__Selected = False
         
     def Pen(self):
         return self.__Pen
@@ -29,6 +30,9 @@ class Shape(ABC):
 
     def Y2(self):
         return self.__Y2
+
+    def Selected(self):
+        return self.__Selected
 
     @abstractmethod
     def Draw(self, dc: wx.DC):
@@ -50,3 +54,11 @@ class Shape(ABC):
         self.__Y1 += yDelta
         self.__X2 += xDelta
         self.__Y2 += yDelta
+
+    def Select(self):
+        self.__Selected = True
+        self.__Pen.Style = wx.PENSTYLE_SHORT_DASH
+
+    def Deselect(self):
+        self.__Selected = False
+        self.__Pen.Style = wx.PENSTYLE_SOLID

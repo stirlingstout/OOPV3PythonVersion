@@ -95,7 +95,8 @@ class OOPDraw(wx.Frame):
         for shape in self.Shapes:
             shape.Draw(dc)
 
-    def AddShape(self: wx.Frame, e: wx.MouseEvent):
+    def AddShape(self, e: wx.MouseEvent):
+        self.DeselectAll()
         shapeName: str = self.FindWindow("Shape").Value
         if shapeName == "Line":
             self.Shapes.append(Line(self.CurrentPen, e.Position.x, e.Position.y));
@@ -105,6 +106,7 @@ class OOPDraw(wx.Frame):
             self.Shapes.append(Ellipse(self.CurrentPen, e.Position.x, e.Position.y))
         elif shapeName == "Circle":
             self.Shapes.append(Circle(self.CurrentPen, e.Position.x, e.Position.y))
+        self.Shapes[-1].Select()
 
     def OnMouseDown(self: wx.Frame, e: wx.MouseEvent):
         self.dragging = True
@@ -133,6 +135,10 @@ class OOPDraw(wx.Frame):
             # debug: print(f"{type(currentShape)}({currentShape.X1()}, {currentShape.Y1()})-({currentShape.X2()}, {currentShape.Y2()})")
             self.lastMousePosition = e.Position
             self.Refresh()
+
+    def DeselectAll(self):
+        for shape in self.Shapes:
+            shape.Deselect()
 
 
 if __name__ == '__main__':
