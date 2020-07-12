@@ -17,6 +17,6 @@ class Circle(Shape):
         DrawingFunctions.DrawClosedArc(dc, self)
 
     def GrowTo(self, x2: int, y2: int):
-        diameter: int = max([x2 - self.X1(), y2 - self.Y1()])
+        diameter: int = max(x2 - self.X1(), y2 - self.Y1())
         self._Shape__X2 = self.X1() + diameter
         self._Shape__Y2 = self.Y1() + diameter

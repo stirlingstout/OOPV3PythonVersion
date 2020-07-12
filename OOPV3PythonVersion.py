@@ -4,10 +4,11 @@ from typing import List, Callable, Optional
 
 from shape import Shape
 
-from Line import Line
-from Rectangle import Rectangle
-from Ellipse import Ellipse
-from Circle import Circle
+from line import Line
+from rectangle import Rectangle
+from ellipse import Ellipse
+from circle import Circle
+from composite_shape import CompositeShape
 
 
 class OOPDraw(wx.Frame):

@@ -22,23 +22,26 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Circle.py">
+    <Compile Include="circle.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="composite_shape.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="drawing_functions.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Ellipse.py">
+    <Compile Include="ellipse.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Line.py">
+    <Compile Include="line.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="OOPV3PythonVersion.py" />
-    <Compile Include="Rectangle.py">
+    <Compile Include="rectangle.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Shape.py">
+    <Compile Include="shape.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="__init__.py">

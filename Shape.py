@@ -43,10 +43,10 @@ class Shape(ABC):
         self.__Y2 = y2
 
     def EnclosingRectangle(self) -> Tuple[int, int, int, int]:
-        x: int = min([self.__X1, self.__X2])
-        y: int = min([self.__Y1, self.__Y2])  
-        w: int = max([self.__X1, self.__X2]) - x
-        h: int = max([self.__Y1, self.__Y2]) - y
+        x: int = min(self.__X1, self.__X2)
+        y: int = min(self.__Y1, self.__Y2)  
+        w: int = max(self.__X1, self.__X2) - x
+        h: int = max(self.__Y1, self.__Y2) - y
         return (x, y, w, h)
 
     def MoveBy(self, xDelta: int, yDelta: int):
