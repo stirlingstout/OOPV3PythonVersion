@@ -15,3 +15,7 @@ Module names should be lowercase (done, but then the from line import Line doesn
 do we need OnAction/ShapeChanged since we don't do anything when they do change?
 Most common error is forgetting self.
 When running keep the DOS window visible to see any errors (give example)
+Unlike the C#, in CompositeShape.CalculateEnclosingRectangle,
+          self._Shape__X1 = min(self.Components, key=lambda c: min([c.Y1(), c.Y2()]))
+          doesn't report the minimum of the minimum of c.Y1() and c.Y2() but rather the
+          c which produces the minimum of the minimum of c.Y1() and c.Y2().

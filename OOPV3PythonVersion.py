@@ -89,7 +89,9 @@ class OOPDraw(wx.Frame):
         pass
 
     def OnActionChanged(self: wx.Frame, e: wx.Event):
-        pass
+        action: str = self.FindWindow("Action").Value
+        if action == "Group":
+            self.GroupSelectedShapes()
 
     def OnPaint(self: wx.Frame, e: wx.Event):
         dc: wx.DC = wx.BufferedPaintDC(self.Canvas)
@@ -163,11 +165,22 @@ class OOPDraw(wx.Frame):
         for s in self.GetSelectedShapes():
             s.MoveBy(e.Position.x - self.lastMousePosition.x, e.Position.y - self.lastMousePosition.y)
 
+    def GroupSelectedShapes(self):
+        members = list(self.GetSelectedShapes())
+        if len(members) >= 2:
+            composite = CompositeShape(members)
+            composite.Select()
+            self.Shapes.append(composite)
+            for m in members:
+                self.Shapes.remove(m)
+                m.Deselect()
+            self.Refresh()
+
 
 if __name__ == '__main__':
     app = wx.App()
-    frame = OOPDraw()
 
+    frame = OOPDraw()
     frame.Show()
 
     app.MainLoop()
