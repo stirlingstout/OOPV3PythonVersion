@@ -4,10 +4,10 @@ from typing import List, Callable, Optional
 
 from shape import Shape
 
-from line import Line
-from rectangle import Rectangle
-from ellipse import Ellipse
-from circle import Circle
+from Line import Line
+from Rectangle import Rectangle
+from Ellipse import Ellipse
+from Circle import Circle
 from composite_shape import CompositeShape
 
 
@@ -34,7 +34,7 @@ class OOPDraw(wx.Frame):
         AddChoice(panel, vBox, "LineWidth", "Line width:", 0, ["Thin", "Medium", "Thick"], self.OnLineWidthChanged)
         AddChoice(panel, vBox, "Colour", "Colour:", 30, ["Red", "Green", "Blue"], self.OnColourChanged)
         AddChoice(panel, vBox, "Shape", "Shape:", 60, ["Line", "Rectangle", "Ellipse", "Circle"] , self.OnShapeChanged)
-        AddChoice(panel, vBox, "Action", "Action:", 90, ["Draw", "Select", "Duplicate", "Move", "Group"] , self.OnActionChanged)
+        AddChoice(panel, vBox, "Action", "Action:", 90, ["Draw", "Select", "Duplicate", "Move", "Group", "Delete"] , self.OnActionChanged)
 
         # hBox is responsible for sizing the panel for controls and the panel for drawing on (canvas)
         hBox: wx.BoxSizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -92,6 +92,11 @@ class OOPDraw(wx.Frame):
         action: str = self.FindWindow("Action").Value
         if action == "Group":
             self.GroupSelectedShapes()
+        elif action == "Delete":
+            self.DeleteSelectedShapes()
+        elif action == "Duplicate":
+            self.DuplicateSelectedShapes()
+            self.Refresh()
 
     def OnPaint(self: wx.Frame, e: wx.Event):
         dc: wx.DC = wx.BufferedPaintDC(self.Canvas)
@@ -134,11 +139,11 @@ class OOPDraw(wx.Frame):
 
     def OnMouseMove(self: wx.Frame, e: wx.MouseEvent):
         if self.dragging:
-            currentShape: Shape = self.Shapes[-1]
             action: str = self.FindWindow("Action").Value
             if action == "Move":
                 self.MoveSelectedShapes(e)
             elif action == "Draw":
+                currentShape: Shape = self.Shapes[-1]
                 currentShape.GrowTo(e.Position.x, e.Position.y)
             elif action == "Select":
                 self.SelectionBox.GrowTo(e.X,e.Y)
@@ -159,7 +164,7 @@ class OOPDraw(wx.Frame):
                 s.Select()
 
     def GetSelectedShapes(self) -> List[Shape]:
-        return filter(lambda s: s.Selected(), self.Shapes)
+        return list(filter(lambda s: s.Selected(), self.Shapes))
 
     def MoveSelectedShapes(self, e: wx.MouseEvent):
         for s in self.GetSelectedShapes():
@@ -175,6 +180,22 @@ class OOPDraw(wx.Frame):
                 self.Shapes.remove(m)
                 m.Deselect()
             self.Refresh()
+
+    def DeleteSelectedShapes(self):
+        for s in self.GetSelectedShapes():
+            self.Shapes.remove(s)
+        self.Refresh()
+
+    def DuplicateSelectedShapes(self):
+        duplicates = []
+        for s in self.GetSelectedShapes():
+            duplicates.append(s.Clone())
+            s.Deselect()
+        for s in duplicates:
+            self.Shapes.append(s)
+            s.MoveBy(50, 50)
+            s.Select()
+        
 
 
 if __name__ == '__main__':

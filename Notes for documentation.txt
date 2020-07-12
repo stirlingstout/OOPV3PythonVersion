@@ -13,9 +13,17 @@ Problem with type hints in tuple deconstruction (page 48)
   Enclose x, y, w, h in ()
 Module names should be lowercase (done, but then the from line import Line doesn't work!)
 do we need OnAction/ShapeChanged since we don't do anything when they do change?
-Most common error is forgetting self.
+Most common error is forgetting self. or forgetting wx.
 When running keep the DOS window visible to see any errors (give example)
 Unlike the C#, in CompositeShape.CalculateEnclosingRectangle,
-          self._Shape__X1 = min(self.Components, key=lambda c: min([c.Y1(), c.Y2()]))
+          self._Shape__X1 = min(self.Components(), key=lambda c: min([c.Y1(), c.Y2()]))
           doesn't report the minimum of the minimum of c.Y1() and c.Y2() but rather the
           c which produces the minimum of the minimum of c.Y1() and c.Y2().
+Odd warnings: 
+Severity	Code	Description	Project	File	Line	Source	Suppression State
+Warning		unresolved import 'shape'		C:\Users\cuspc\AppData\Local\Temp\TFSTemp\vctmp9864_652544.OOPV3PythonVersion.8585686a.py	5	IntelliSense	
+ERROR: draw a line, select it, delete it, change to Draw but don't draw anything
+  change action to Delete and move the mouse (you try to access the last item)
+    File "C:\Users\cuspc\source\repos\OOPV3PythonVersion\OOPV3PythonVersion.py", line 139, in OnMouseMove
+    currentShape: Shape = self.Shapes[-1]
+IndexError: list index out of range

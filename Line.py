@@ -11,4 +11,6 @@ class Line(Shape):
         dc.Pen = self.Pen()
         dc.DrawLine(self.X1(), self.Y1(), self.X2(), self.Y2())
 
+    def Clone(self) -> Shape:
+        return Line(self.Pen(), self.X1(), self.Y1(), self.X2(), self.Y2())
 

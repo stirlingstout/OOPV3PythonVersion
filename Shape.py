@@ -62,3 +62,7 @@ class Shape(ABC):
     def Deselect(self):
         self.__Selected = False
         self.__Pen.Style = wx.PENSTYLE_SOLID
+
+    @abstractmethod
+    def Clone(self): # Not sure we can have a return type on this
+        pass

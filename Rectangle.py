@@ -20,7 +20,8 @@ class Rectangle(Shape):
         (xs, ys, ws, hs) = s.EnclosingRectangle()
         return x < xs and y < ys and x + w > xs + ws and y + h > ys + hs
 
-
+    def Clone(self) -> Shape:
+        return Rectangle(self.Pen(), self.X1(), self.Y1(), self.X2(), self.Y2())
 
 
 

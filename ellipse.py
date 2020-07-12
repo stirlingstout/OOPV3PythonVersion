@@ -11,3 +11,6 @@ class Ellipse(Shape):
     def Draw(self, dc: wx.DC):
         DrawingFunctions.DrawClosedArc(dc, self)
 
+    def Clone(self) -> Shape:
+        return Ellipse(self.Pen(), self.X1(), self.Y1(), self.X2(), self.Y2())
+
