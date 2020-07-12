@@ -112,7 +112,7 @@ class OOPDraw(wx.Frame):
 
     def OnMouseDown(self: wx.Frame, e: wx.MouseEvent):
         self.dragging = True
-        self.startOfDrag = lastMousePosition = e.Position
+        self.startOfDrag = self.lastMousePosition = e.Position
         action: str = self.FindWindow("Action").Value
         if action == "Draw":
             self.AddShape(e)
@@ -134,9 +134,7 @@ class OOPDraw(wx.Frame):
             currentShape: Shape = self.Shapes[-1]
             action: str = self.FindWindow("Action").Value
             if action == "Move":
-                if self.lastMousePosition == wx.Point(): # dubious?
-                    self.lastMousePosition = e.Position
-                currentShape.MoveBy(e.Position.x - self.lastMousePosition.x, e.Position.y - self.lastMousePosition.y)
+                self.MoveSelectedShapes(e)
             elif action == "Draw":
                 currentShape.GrowTo(e.Position.x, e.Position.y)
             elif action == "Select":
@@ -156,6 +154,13 @@ class OOPDraw(wx.Frame):
         for s in self.Shapes:
             if self.SelectionBox.FullySurrounds(s):
                 s.Select()
+
+    def GetSelectedShapes(self) -> List[Shape]:
+        return filter(lambda s: s.Selected(), self.Shapes)
+
+    def MoveSelectedShapes(self, e: wx.MouseEvent):
+        for s in self.GetSelectedShapes():
+            s.MoveBy(e.Position.x - self.lastMousePosition.x, e.Position.y - self.lastMousePosition.y)
 
 
 if __name__ == '__main__':
