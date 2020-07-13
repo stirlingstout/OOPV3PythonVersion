@@ -11,9 +11,9 @@ from Circle import Circle
 from composite_shape import CompositeShape
 
 
-class OOPDraw(wx.Frame):
-    """ OOPDraw is a subclass of wx.Frame which contains all the wx.Windows (labels, comboboxes and
-    panel on which graphic elements are drawn """
+class OOPDrawIntermediate(wx.Frame):
+    """ OOPDrawIntermediate is a subclass of wx.Frame which contains all the wx.Windows (labels, comboboxes and
+    panel on which graphic elements are drawn. It's used as a stepping stone to the ful OOPDraw package """
 
     def __init__(self):
         def AddChoice(panel: wx.Panel, vBox: wx.BoxSizer, name: str, label: str, y: int, options: List[str], handler: Callable):
@@ -56,6 +56,11 @@ class OOPDraw(wx.Frame):
         self.Canvas.Bind(wx.EVT_LEFT_DOWN, self.OnMouseDown)
         self.Canvas.Bind(wx.EVT_LEFT_UP, self.OnMouseUp)
         self.Canvas.Bind(wx.EVT_MOTION, self.OnMouseMove)
+
+
+class OOPDraw(OOPDrawIntermediate):
+    def __init__(self):
+        OOPDrawIntermediate.__init__(self)
 
         self.dragging: bool = False
         self.startOfDrag: wx.Point = wx.Point()
@@ -196,7 +201,6 @@ class OOPDraw(wx.Frame):
             s.MoveBy(50, 50)
             s.Select()
         
-
 
 if __name__ == '__main__':
     app = wx.App()
