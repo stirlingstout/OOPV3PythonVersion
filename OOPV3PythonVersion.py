@@ -2,13 +2,9 @@ import wx # type: ignore
 
 from typing import List, Callable, Optional
 
-from shape import Shape
+#from shape import Shape
 
-from Line import Line
-from Rectangle import Rectangle
-from Ellipse import Ellipse
-from Circle import Circle
-from composite_shape import CompositeShape
+from classes import shape, line, rectangle, ellipse, circle, composite_shape
 
 
 class OOPDrawIntermediate(wx.Frame):
@@ -17,12 +13,18 @@ class OOPDrawIntermediate(wx.Frame):
 
     def __init__(self):
         def AddChoice(panel: wx.Panel, vBox: wx.BoxSizer, name: str, label: str, y: int, options: List[str], handler: Callable):
-            vBox.AddSpacer(10)
-            vBox.Add(wx.StaticText(panel, wx.ID_ANY, label))
+            hBox: wx.BoxSizer = wx.BoxSizer(wx.HORIZONTAL)
+            hBox.AddSpacer(10)
+            hBox.Add(wx.StaticText(panel, wx.ID_ANY, label))
+            vBox.Add(hBox)
+
+            hBox = wx.BoxSizer(wx.HORIZONTAL)
             cb: wx.ComboBox = wx.ComboBox(panel, wx.ID_ANY, options[0], choices=options, style=wx.CB_READONLY, name=name)
             cb.Bind(wx.EVT_COMBOBOX, handler, cb)
-            vBox.Add(cb)   
-            vBox.AddSpacer(10)
+            hBox.AddSpacer(10)
+            hBox.Add(cb)
+            hBox.AddSpacer(10)
+            vBox.Add(hBox)
            
         wx.Frame.__init__(self, None, wx.ID_ANY, 'OOPDraw in Python', size=(800, 600))
         self.Size = (0, 0, 800, 600)
@@ -120,13 +122,13 @@ class OOPDraw(OOPDrawIntermediate):
     def AddShape(self, e: wx.MouseEvent):
         shapeName: str = self.FindWindow("Shape").Value
         if shapeName == "Line":
-            self.Shapes.append(Line(self.CurrentPen, e.Position.x, e.Position.y));
+            self.Shapes.append(line.Line(self.CurrentPen, e.Position.x, e.Position.y));
         elif shapeName == "Rectangle":
-            self.Shapes.append(Rectangle(self.CurrentPen, e.Position.x, e.Position.y))
+            self.Shapes.append(rectangle.Rectangle(self.CurrentPen, e.Position.x, e.Position.y))
         elif shapeName == "Ellipse":
-            self.Shapes.append(Ellipse(self.CurrentPen, e.Position.x, e.Position.y))
+            self.Shapes.append(ellipse.Ellipse(self.CurrentPen, e.Position.x, e.Position.y))
         elif shapeName == "Circle":
-            self.Shapes.append(Circle(self.CurrentPen, e.Position.x, e.Position.y))
+            self.Shapes.append(circle.Circle(self.CurrentPen, e.Position.x, e.Position.y))
 
     def OnMouseDown(self: wx.Frame, e: wx.MouseEvent):
         self.dragging = True
@@ -136,7 +138,7 @@ class OOPDraw(OOPDrawIntermediate):
             self.AddShape(e)
         elif action == "Select":
             p = wx.Pen(wx.BLACK, 1)
-            self.SelectionBox = Rectangle(p, self.startOfDrag.x, self.startOfDrag.y)
+            self.SelectionBox = rectangle.Rectangle(p, self.startOfDrag.x, self.startOfDrag.y)
 
         # debug: print(f"{type(self.Shapes[-1])}Circle({self.Shapes[-1].X1()}, {self.Shapes[-1].Y1()})-({self.Shapes[-1].X2()}, {self.Shapes[-1].Y2()})")
         e.Skip()
@@ -173,7 +175,7 @@ class OOPDraw(OOPDrawIntermediate):
             if self.SelectionBox.FullySurrounds(s):
                 s.Select()
 
-    def GetSelectedShapes(self) -> List[Shape]:
+    def GetSelectedShapes(self) -> List[shape.Shape]:
         return list(filter(lambda s: s.Selected(), self.Shapes))
 
     def MoveSelectedShapes(self, e: wx.MouseEvent):
@@ -183,7 +185,7 @@ class OOPDraw(OOPDrawIntermediate):
     def GroupSelectedShapes(self):
         members = list(self.GetSelectedShapes())
         if len(members) >= 2:
-            composite = CompositeShape(members)
+            composite = composite_shape.CompositeShape(members)
             composite.Select()
             self.Shapes.append(composite)
             for m in members:

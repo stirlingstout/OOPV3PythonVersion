@@ -22,34 +22,34 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="circle.py">
+    <Compile Include="classes\circle.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="composite_shape.py">
+    <Compile Include="classes\composite_shape.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="drawing_functions.py">
+    <Compile Include="classes\drawing_functions.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ellipse.py">
+    <Compile Include="classes\ellipse.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="line.py">
+    <Compile Include="classes\line.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="OOPV3PythonVersion.py" />
-    <Compile Include="rectangle.py">
+    <Compile Include="classes\rectangle.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="shape.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="__init__.py">
+    <Compile Include="classes\shape.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Notes for documentation.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="classes\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

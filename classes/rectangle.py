@@ -2,9 +2,9 @@ import wx # type: ignore
 
 from typing import Tuple
 
-from shape import Shape
+from classes import shape
 
-class Rectangle(Shape):
+class Rectangle(shape.Shape):
     """I represent a rectangle in the OOPDraw program. I have a
     Pen, and the start and end points of my top left and bottom 
     corners of the rectangle.
@@ -15,12 +15,12 @@ class Rectangle(Shape):
         dc.Pen = self.Pen()
         dc.DrawRectangle(x, y, w, h)
         
-    def FullySurrounds(self, s: Shape) -> bool:
+    def FullySurrounds(self, s: shape.Shape) -> bool:
         (x, y, w, h) = self.EnclosingRectangle()
         (xs, ys, ws, hs) = s.EnclosingRectangle()
         return x < xs and y < ys and x + w > xs + ws and y + h > ys + hs
 
-    def Clone(self) -> Shape:
+    def Clone(self) -> shape.Shape:
         return Rectangle(self.Pen(), self.X1(), self.Y1(), self.X2(), self.Y2())
 
 

@@ -1,8 +1,9 @@
 import wx # type: ignore
 
-from shape import Shape
+from classes import shape
 
-class Line(Shape):
+
+class Line(shape.Shape):
     """I represent a line in the OOPDraw program. I have a
     Pen, and the start and end points of the line I represent.
     The end point can be changed using my GrowTo method"""
@@ -11,6 +12,6 @@ class Line(Shape):
         dc.Pen = self.Pen()
         dc.DrawLine(self.X1(), self.Y1(), self.X2(), self.Y2())
 
-    def Clone(self) -> Shape:
+    def Clone(self) -> shape.Shape:
         return Line(self.Pen(), self.X1(), self.Y1(), self.X2(), self.Y2())
 
