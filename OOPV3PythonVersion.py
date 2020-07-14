@@ -18,8 +18,8 @@ class OOPDrawIntermediate(wx.Frame):
     def __init__(self):
         def AddChoice(panel: wx.Panel, vBox: wx.BoxSizer, name: str, label: str, y: int, options: List[str], handler: Callable):
             vBox.Add(wx.StaticText(panel, wx.ID_ANY, label))
-            cb: wx.ComboBox = wx.ComboBox(panel, wx.ID_ANY, options[0], choices=options, name=name)
-            cb.Bind(wx.EVT_TEXT, handler, cb)
+            cb: wx.ComboBox = wx.ComboBox(panel, wx.ID_ANY, options[0], choices=options, style=wx.CB_READONLY, name=name)
+            cb.Bind(wx.EVT_COMBOBOX, handler, cb)
             vBox.Add(cb)       
            
         wx.Frame.__init__(self, None, wx.ID_ANY, 'OOPDraw in Python', size=(800, 600))
@@ -45,13 +45,14 @@ class OOPDrawIntermediate(wx.Frame):
 
         self.Canvas.Bind(wx.EVT_PAINT, self.OnPaint)
        
-        self.Canvas.DoubleBuffered = True 
-        self.CurrentPen: wx.Pen = wx.Pen(wx.BLACK)
+        #self.Canvas.DoubleBuffered = True 
+        self.CurrentPen: wx.Pen = wx.Pen(wx.GREEN, 4)
         self.CurrentBrush: wx.Brush = wx.Brush(wx.BLACK, style=wx.BRUSHSTYLE_TRANSPARENT)
 
         self.FindWindow("LineWidth").Value = "Medium"
         self.FindWindow("Colour").Value = "Green"
         self.FindWindow("Shape").Value = "Line"
+        # These don't raise EVT_COMBOBOX
 
         self.Canvas.Bind(wx.EVT_LEFT_DOWN, self.OnMouseDown)
         self.Canvas.Bind(wx.EVT_LEFT_UP, self.OnMouseUp)
