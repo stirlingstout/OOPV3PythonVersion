@@ -4,7 +4,12 @@ from typing import List, Callable, Optional
 
 #from shape import Shape
 
-from classes import shape, line, rectangle, ellipse, circle, composite_shape
+from classes.circle import Circle
+from classes.shape import Shape
+from classes.line import Line
+from classes.rectangle import Rectangle
+from classes.ellipse import Ellipse
+from classes.composite_shape import CompositeShape
 
 
 class OOPDrawIntermediate(wx.Frame):
@@ -122,13 +127,13 @@ class OOPDraw(OOPDrawIntermediate):
     def AddShape(self, e: wx.MouseEvent):
         shapeName: str = self.FindWindow("Shape").Value
         if shapeName == "Line":
-            self.Shapes.append(line.Line(self.CurrentPen, e.Position.x, e.Position.y));
+            self.Shapes.append(Line(self.CurrentPen, e.Position.x, e.Position.y));
         elif shapeName == "Rectangle":
-            self.Shapes.append(rectangle.Rectangle(self.CurrentPen, e.Position.x, e.Position.y))
+            self.Shapes.append(Rectangle(self.CurrentPen, e.Position.x, e.Position.y))
         elif shapeName == "Ellipse":
-            self.Shapes.append(ellipse.Ellipse(self.CurrentPen, e.Position.x, e.Position.y))
+            self.Shapes.append(Ellipse(self.CurrentPen, e.Position.x, e.Position.y))
         elif shapeName == "Circle":
-            self.Shapes.append(circle.Circle(self.CurrentPen, e.Position.x, e.Position.y))
+            self.Shapes.append(Circle(self.CurrentPen, e.Position.x, e.Position.y))
 
     def OnMouseDown(self: wx.Frame, e: wx.MouseEvent):
         self.dragging = True
@@ -138,7 +143,7 @@ class OOPDraw(OOPDrawIntermediate):
             self.AddShape(e)
         elif action == "Select":
             p = wx.Pen(wx.BLACK, 1)
-            self.SelectionBox = rectangle.Rectangle(p, self.startOfDrag.x, self.startOfDrag.y)
+            self.SelectionBox = Rectangle(p, self.startOfDrag.x, self.startOfDrag.y)
 
         # debug: print(f"{type(self.Shapes[-1])}Circle({self.Shapes[-1].X1()}, {self.Shapes[-1].Y1()})-({self.Shapes[-1].X2()}, {self.Shapes[-1].Y2()})")
         e.Skip()
@@ -175,7 +180,7 @@ class OOPDraw(OOPDrawIntermediate):
             if self.SelectionBox.FullySurrounds(s):
                 s.Select()
 
-    def GetSelectedShapes(self) -> List[shape.Shape]:
+    def GetSelectedShapes(self) -> List[Shape]:
         return list(filter(lambda s: s.Selected(), self.Shapes))
 
     def MoveSelectedShapes(self, e: wx.MouseEvent):
@@ -185,7 +190,7 @@ class OOPDraw(OOPDrawIntermediate):
     def GroupSelectedShapes(self):
         members = list(self.GetSelectedShapes())
         if len(members) >= 2:
-            composite = composite_shape.CompositeShape(members)
+            composite = CompositeShape(members)
             composite.Select()
             self.Shapes.append(composite)
             for m in members:
