@@ -45,7 +45,7 @@ class OOPDrawIntermediate(wx.Frame):
 
         self.Canvas.Bind(wx.EVT_PAINT, self.OnPaint)
        
-        #self.Canvas.DoubleBuffered = True 
+        self.Canvas.SetDoubleBuffered(True) 
         self.CurrentPen: wx.Pen = wx.Pen(wx.GREEN, 4)
         self.CurrentBrush: wx.Brush = wx.Brush(wx.BLACK, style=wx.BRUSHSTYLE_TRANSPARENT)
 
