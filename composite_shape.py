@@ -35,10 +35,10 @@ class CompositeShape(Shape):
         self.CalculateEnclosingRectangle()
 
     def Components(self) -> List[Shape]:
-        return __Components
+        return self.__Components
 
     def Clone(self) -> Shape:
         members: List[Shape] = []
         for shape in self.Components():
-            members.append(shape.clone())
-        return ComponentShape(members)
+            members.append(shape.Clone())
+        return CompositeShape(members)
