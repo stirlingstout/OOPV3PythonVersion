@@ -17,10 +17,12 @@ class OOPDrawIntermediate(wx.Frame):
 
     def __init__(self):
         def AddChoice(panel: wx.Panel, vBox: wx.BoxSizer, name: str, label: str, y: int, options: List[str], handler: Callable):
+            vBox.AddSpacer(10)
             vBox.Add(wx.StaticText(panel, wx.ID_ANY, label))
             cb: wx.ComboBox = wx.ComboBox(panel, wx.ID_ANY, options[0], choices=options, style=wx.CB_READONLY, name=name)
             cb.Bind(wx.EVT_COMBOBOX, handler, cb)
-            vBox.Add(cb)       
+            vBox.Add(cb)   
+            vBox.AddSpacer(10)
            
         wx.Frame.__init__(self, None, wx.ID_ANY, 'OOPDraw in Python', size=(800, 600))
         self.Size = (0, 0, 800, 600)
@@ -40,6 +42,7 @@ class OOPDrawIntermediate(wx.Frame):
         hBox: wx.BoxSizer = wx.BoxSizer(wx.HORIZONTAL)
         self.Sizer = hBox
         hBox.Add(panel, 0, wx.EXPAND)
+        hBox.AddSpacer(10)
         self.Canvas: wx.Panel = wx.Panel(self, wx.ID_ANY, style=wx.BORDER_SIMPLE, name="Canvas")
         hBox.Add(self.Canvas, 1, wx.EXPAND)
 
